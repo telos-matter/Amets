@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+
+#text {
+    position: relative;
+    top: -2600px;
+    left: 100px;
+    font-size: 128px;
+    font-family: "Comic Sans MS", "Comic Sans";
+
+    animation-name: move;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-delay: -0s;
+    animation-iteration-count: infinite;
+}
+
+#span_0 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -0s;
+    animation-iteration-count: infinite;
+}
+
+#span_1 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -1s;
+    animation-iteration-count: infinite;
+}
+
+#span_2 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -2s;
+    animation-iteration-count: infinite;
+}
+
+#span_3 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -3s;
+    animation-iteration-count: infinite;
+}
+
+#span_4 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -4s;
+    animation-iteration-count: infinite;
+}
+
+#span_5 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -5s;
+    animation-iteration-count: infinite;
+}
+
+#span_6 {
+    animation-name: rainbow;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    animation-delay: -6s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        color: rgb(255, 0, 13);
+    }
+
+    14% {
+        color: rgb(255, 112, 52);
+    }
+
+    28% {
+        color: rgb(255, 253, 1);
+    }
+
+    42% {
+        color: rgb(102, 255, 0);
+    }
+
+    56% {
+        color: rgb(1, 101, 252);
+    }
+
+    70% {
+        color: rgb(111, 0, 254);
+    }
+
+    84% {
+        color: rgb(173, 10, 253);
+    }
+
+    100% {
+        color: rgb(255, 0, 13);
+    }
+
+}
+
+@keyframes move {
+    0% {
+        top: -2600px;
+    } 
+
+    25% {
+        top: -2650px;
+    }
+
+    50% {
+        top: -2600px;
+    }
+
+    75% {
+        top: -2550px;
+    }
+
+    100% {
+        top: -2600px;
+    }
+}

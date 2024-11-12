@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/about.css' %}">
+        <title>Amets - About</title>
+
+    </head>
+    <body>
+
+        <div id="panel">
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="title">About</p>
+
+            <hr id="line">
+
+            <p id="content">This website was made in the context of an academic project (3rd Semester of the Computer science engineering course of the Bachelor institute for the year 2021/2022), the task was to create a website that helps the users learn German, and that by using the Django framework.</p>
+
+        </div>
+
+
+    </body>
+</html>

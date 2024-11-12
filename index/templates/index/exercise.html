@@ -1,0 +1,272 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/exercise.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <title>Amets - Exercise</title>
+        
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+            <div id="user_block">
+
+                {% if user.is_authenticated %}
+                
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+                {% else %}
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+                {% endif %}
+
+            </div>
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+
+            <div id="exercise_div">
+
+                <div id="exercise_container">
+    
+                    <span id="exercise_title">{{exercise.exercise_title}}</span>
+    
+                    <hr id="exercise_line">
+    
+                    <p id="exercise_statement">• {{exercise.exercise_statement}}</p>
+
+                    {% if exercise.hasOptions %}
+                        <p id="exercise_options">→ {{exercise.exercise_options}}</p>
+                    {% endif %}
+
+                    {% for document in exercise.getDocuments %}
+                        {% if document.isAudio %}
+                            <audio controls class="exercise_documents audio">
+                                <source src="{% static document.getPath %}" type="audio/mpeg">
+                                Your browser does not support audio elements.
+                            </audio>
+                        {% else %}
+                            <img class="exercise_documents image" src="{% static document.getPath %}" alt="Exercise document">
+                        {% endif %}
+                    {% endfor %}
+               
+                    <form id="exercise_form" action="{% url 'index:exercise' exercise.id %}" method="post">
+                        {% csrf_token %}
+            
+                        <!--Input type exercise-->
+                        {% if exercise.getType == 'INP' %}
+    
+                            <ol id="exercise_questions">
+    
+                                {% for question in exercise.getQuestions %}
+                                    <li class="exercise_question">
+    
+                                        {% for element in question.getStatementAsList %}
+                                        
+                                        {% if element == '~'%} 
+                                            <input class="input" type="text" name="{{question.id}}_{{forloop.counter}}" size="24">
+                                        {% elif element == '*' %}
+                                            DOCUMENT_NOT_YET_IMPLIMENTED
+                                        {% else %}
+                                            {{element}}
+                                        {% endif %}
+                                        
+                                        {% endfor %}
+                                        
+                                    </li>
+                                    <br>
+                                {% endfor %}
+    
+                            </ol>
+            
+                        <!--True or false type exercise-->
+                        {% elif exercise.getType == 'TOF' %}
+    
+                            <ol id="exercise_questions">
+            
+                                {% for question in exercise.getQuestions %}
+                                    <li class="exercise_question">
+    
+                                        {% for element in question.getStatementAsList %}               
+                    
+                                            {% if element == '~'%}
+                                            <input class="input" type="radio" name="{{question.id}}" value="0" checked>
+                                            <input class="input" type="radio" name="{{question.id}}" value="1">
+                                            {% elif element == '*' %}
+                                                DOCUMENT_NOT_YET_IMPLIMENTED
+                                            {% else %}
+                                                {{element}}
+                                            {% endif %}
+                    
+                                        {% endfor %}
+    
+                                    </li>
+                                    <br>
+                                {% endfor %}
+    
+                            </ol>
+            
+                        <!--One in many type exercise-->
+                        {% elif exercise.getType == 'OIM' %}
+                                
+                            <ol id="exercise_questions">
+                
+                                {% for question in exercise.getQuestions %}
+                                    <li class="exercise_question">
+    
+                                        {% for element in question.getStatementAsList %}               
+                    
+                                            {% if element == '~'%}
+                                                <input class="input" type="radio" name="{{question.id}}" value="{{forloop.counter}}" checked>
+                                            {% elif element == '*' %}
+                                                DOCUMENT_NOT_YET_IMPLIMENTED
+                                            {% else %}
+                                                {{element}}
+                                            {% endif %}
+                    
+                                        {% endfor %}
+    
+                                    </li>
+                                    <br>
+                                {% endfor %}
+    
+                            </ol>
+                           
+                        {% endif %}
+            
+                        <input id="exercise_submit" type="submit" value="Verify your answers">
+                    </form>
+    
+                </div>
+
+                {% if evaluated %}
+                    <div id="correction_container">
+
+                        <!--Input type correction-->
+                        {% if exercise.getType == 'INP' %}
+
+                            <span class="user_answers_label">• Your answers: </span>
+                            {% for answers in user_answers %}
+                                <ol>
+                                    {% for answer in answers%}
+
+                                        <li class="user_answers">{{answer}}</li>
+
+                                    {% endfor %}
+                                </ol>
+                                <br>
+                            {% endfor %}
+
+                            <span class="questions_answers_label">• Correct answers: </span>
+                            {% for answers in questions_answers %}
+                                <ol>
+                                    {% for answer in answers%}
+
+                                        <li class="questions_answers">{{answer}}</li>
+
+                                    {% endfor %}
+                                </ol>
+                                <br>
+                            {% endfor %}
+
+                            <p class="correct_answers">• You got {{correct_answers}} correct answers.</p>
+
+                            <p class="answers_count">• Out of {{answers_count}} answers.</p>
+
+                        <!--True or false type correction-->
+                        {% elif exercise.getType == 'TOF' %}
+
+                            <span class="user_answers_label">• Your answers: </span>
+                            <ol>
+                                {% for answer in user_answers %}
+                                    <li class="user_answers">
+                                        {% if answer == '0' %}
+                                            Falsch
+                                        {% elif answer == '1' %}
+                                            Richtig
+                                        {% endif %}
+                                    </li>   
+                                {% endfor %}
+                            </ol>
+
+                            <span class="questions_answers_label">• Correct answers: </span>
+                            <ol>
+                                {% for answer in questions_answers %}
+                                    <li class="questions_answers">
+                                        {% if answer == '0' %}
+                                            Falsch
+                                        {% elif answer == '1' %}
+                                            Richtig
+                                        {% endif %}
+                                    </li>        
+                                {% endfor %}
+                            </ol>
+
+                            <p class="correct_answers">• You got {{correct_answers}} correct answers.</p>
+
+                            <p class="answers_count">• Out of {{answers_count}} answers.</p>
+
+                        <!--One in many type correction-->
+                        {% elif exercise.getType == 'OIM' %}
+
+                            <span class="user_answers_label">• Your answers: </span>
+                            <ol>
+                                {% for answer in user_answers %}
+                                    <li class="user_answers">The {{answer}} answer</li>   
+                                {% endfor %}
+                            </ol>
+
+                            <span class="questions_answers_label">• Correct answers: </span>
+                            <ol>
+                                {% for answer in questions_answers %}
+                                    <li class="questions_answers">The {{answer}} answer</li>      
+                                {% endfor %}
+                            </ol>
+
+                            <p class="correct_answers">• You got {{correct_answers}} correct answers.</p>
+
+                            <p class="answers_count">• Out of {{answers_count}} answers.</p>
+
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+            </div>
+            
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </body>
+</html>

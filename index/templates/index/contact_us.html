@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/contact_us.css' %}">
+        <title>Amets - Contact us</title>
+
+    </head>
+    <body>
+
+        <div id="panel">
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="title">Contact us</p>
+
+            <hr id="line">
+
+            <p id="header">This site is the result of the <span id="collab">collaborative</span> work of:</p>
+
+            <ul id="list">
+                <li>AABIDOU Hicham</li>
+                <li><a href="{% url 'index:donation' %}" target="blank">EL MAJJANI Youssef</a></li>
+                <li>EL QORAYCHY Driss</li>
+                <li><a href="https://www.instagram.com/med_elyoussfi/?hl=en" target="blank">EL YOUSSFI Mohamed</a></li>
+                <li><a href="mailto:ahemmouda@gmail.com">HEMMOUDA Aymane</a></li>
+            </ul>
+
+        </div>
+        
+
+    </body>
+</html>

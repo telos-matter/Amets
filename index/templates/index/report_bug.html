@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/report_bug.css' %}">
+        <title>Amets - Report bug</title>
+    </head>
+    <body>
+
+        <form id="post_form" action="{% url 'index:report_bug' %}" method="post">
+            {% csrf_token %}
+
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="legend">Report bug</p>
+
+            <hr id="first_line">
+
+            <textarea id="content_field" name="content" form="post_form">Please describe the bug..</textarea>
+
+            <div id="post_form_footer">
+                <input id="submit_button" type="submit" value="Report it">
+                {% if post_message %}
+                    <p id="post_message" class="form_message">{{post_message}}</p>
+                {% endif %}
+            </div>
+        </form>
+
+    </body>
+</html>

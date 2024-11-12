@@ -1,0 +1,508 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: rgb(5, 5, 5);
+}
+
+:link {
+    text-decoration: none;
+}
+
+body {
+    background-color: rgb(240, 242, 245);
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#nav_bar {
+    background-color: rgb(255, 255, 255);
+
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-top-width: 0px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    position: sticky;
+    top: 0px;
+
+    margin-left: 8px;
+    margin-right: 8px;
+   
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#logo {
+    font-family: "Unica One", "Regular" !important;
+    font-size: 32px;
+
+    margin-right: auto;
+    margin-left: 5vw;
+
+    transition: font-size 0.5s ease;
+}
+
+#logo:hover {
+    font-size: 33px;
+}
+
+#search_form {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    background-color: rgb(240, 242, 245);
+    
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+
+    padding: 0px 6px 0px 6px;
+}
+
+#search_form #submit_button {
+    cursor: pointer;
+
+    background-color: transparent;
+    
+    border-style: none;
+
+    margin-top: 3px;
+    margin-right: 8px;
+}
+
+#search_field {
+    background-color: transparent;
+
+    border-style: none;
+    outline: none;
+
+    min-height: 32px;
+
+    font-size: large;
+}
+
+#user_block {
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#avatar_icon {
+    margin-right: 2vw;
+
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 50%;
+
+    background-color: rgb(240, 242, 245);
+}
+
+#avatar_icon:hover {
+    border-radius: 40%;
+}
+
+#username {
+    margin-right: 2vw;
+}
+
+#language_icon { 
+    cursor: pointer;
+
+    margin-left: 4vw;
+}
+
+#main_panel {   
+    margin-left: 8px;
+    margin-right: 8px;
+
+    margin-top: 8vh;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+}
+
+#feed_panel {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+
+    flex-grow: 1;
+
+    margin-right: 16px;
+}
+
+#post_form {
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 16px;
+
+    padding: 28px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;    
+}
+
+#form_type_label {
+    cursor: pointer;
+
+    margin-bottom: 28px;
+}
+
+#form_checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+#form_type_span {
+    padding: 3px;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    
+    color: rgb(255, 255, 255);
+
+    font-size: x-large;
+
+    user-select: none;
+    
+    background-color: rgb(216, 112, 147);
+}
+
+#form_type_span::after {
+    content: 'News';
+}
+
+#form_checkbox:checked + #form_type_span::after {
+    content: 'Thread';
+}
+
+#form_checkbox:checked + #form_type_span {
+    background-color: rgb(53, 119, 186);
+}
+
+#title_field {
+    margin-bottom: 28px;
+
+    background-color: rgb(240, 242, 245);
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 25px;
+
+    height: 5vh;
+    width: 25vw;
+
+    padding-left: 3vh;
+
+    font-size: large;
+}
+
+#content_field {
+    margin-bottom: 28px;
+
+    background-color: rgb(240, 242, 245);
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-radius: 25px;
+
+    /*
+        I dont have time to get the flex grow to work, so the width is hard coded..
+    */
+    width: 70vw;
+    height: 30vh;
+    
+    padding: 3vh;
+
+    font-size: large;
+}
+
+#post_form_footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;   
+}
+
+#post_form_footer #submit_button {
+    cursor: pointer;
+
+    background-color: rgb(240, 242, 245);
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(225, 227, 230);
+    border-radius: 25px;
+
+    padding: 1vh 2vw 1vh 2vw;
+
+    font-size: large;    
+}
+
+.form_message {
+    margin-left: 2vw;
+    font-size: large;
+
+    animation-name: form_message_disappear;
+    animation-duration: 7s; 
+    animation-fill-mode: forwards;
+}
+
+@keyframes form_message_disappear {
+    0% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }  
+}
+
+#error_message {
+    color: red;
+}
+
+#submit_message {
+    color: orange;
+}
+
+#post_message {
+    color: green;
+}
+
+.post {
+    margin-bottom: 16px;
+
+    min-width: 76.5vw;
+
+    padding: 8px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+}
+
+.post_header {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start; 
+
+    margin-right: auto;
+}
+
+.post_face {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    
+    margin: 6px;
+}
+
+.post_type {
+    padding: 3px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+
+    color: rgb(255, 255, 255);
+}
+
+.post_type.THREAD {
+    background-color: rgb(53, 119, 186);
+}
+
+.post_type.NEWS {
+    background-color: rgb(216, 112, 147);
+}
+
+.post_title {
+    white-space: nowrap;
+
+    margin-left: 25vw;
+
+    font-size: x-large;
+}
+
+.post_info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center; 
+
+    margin: 6px;
+}
+
+.post_avatar_icon {
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 50%;
+
+    background-color: rgb(240, 242, 245);
+}
+
+.post_avatar_icon:hover {
+    border-radius: 40%;
+}
+
+.post_poster {
+    margin-left: 3px;
+}
+
+.post_date {
+    margin-left: 1vw;
+
+    color: rgb(101, 103, 107);
+
+    white-space: nowrap;
+}
+
+.post_language {
+    margin-left: 2vw;
+    padding: 3px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+
+    background-color: rgb(87, 191, 220);
+
+    color: rgb(255, 255, 255);
+}
+
+.post_state {
+    white-space: nowrap;   
+    
+    margin-left: 2vw;
+    padding: 3px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+
+    color: rgb(255, 255, 255);
+}
+
+.post_state.WILL_HAPPEN {
+    background-color: rgb(243, 163, 64);
+}
+
+.post_state.NOT_ANSWERED, .post_state.HAPPENED {
+    background-color: rgb(218, 100, 79);    
+}
+
+.post_state.ANSWERED, .post_state.HAPPENING {
+    background-color: rgb(120, 187, 93);   
+}
+
+.post_header_line {
+    width: 50%;
+
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+
+    border-style: solid;
+    border-width: 1px;
+    border-image-source: linear-gradient(to right, rgb(255, 255, 255), rgb(32, 32, 32), rgb(255, 255, 255));
+    border-image-slice: 8%;
+    border-radius: 25px;
+}
+
+.post_content {
+    margin: 1vh 2vw 3vh 2vw;
+    
+    font-size: larger;
+}
+
+#side_panel {
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+#side_panel > * {
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+
+    margin-bottom: 3vh;
+
+    min-width: 285px;
+    min-height: 75px;
+   
+    text-align: center;
+    line-height: 75px;
+
+    font-size: 24px;
+}
+
+#language_panel {
+    display: none;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    height: auto;
+  
+    animation-name: language_appear;
+    animation-duration: 1s; 
+}
+
+@keyframes language_appear {
+    from {opacity: .0;}
+    to {opacity: 1;}     
+}
+
+#feed_link {
+    animation-name: link_appear;
+    animation-duration: 0.7s; 
+    animation-fill-mode: forwards;
+}
+
+@keyframes link_appear {
+    from {background-color: rgb(255, 255, 255); color: rgb(5, 5, 5);}
+    to {background-color: rgb(32, 32, 32); color: rgb(255, 255, 255);}     
+}

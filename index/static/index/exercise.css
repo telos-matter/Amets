@@ -1,0 +1,316 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: rgb(5, 5, 5);
+}
+
+:link {
+    text-decoration: none;
+}
+
+body {
+    background-color: rgb(240, 242, 245);
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#nav_bar {
+    background-color: rgb(255, 255, 255);
+
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-top-width: 0px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    position: sticky;
+    top: 0px;
+
+    margin-left: 8px;
+    margin-right: 8px;
+   
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#logo {
+    font-family: "Unica One", "Regular" !important;
+    font-size: 32px;
+
+    margin-right: auto;
+    margin-left: 5vw;
+
+    transition: font-size 0.5s ease;
+}
+
+#logo:hover {
+    font-size: 33px;
+}
+
+
+#user_block {
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#avatar_icon {
+    margin-right: 2vw;
+
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 50%;
+
+    background-color: rgb(240, 242, 245);
+}
+
+#avatar_icon:hover {
+    border-radius: 40%;
+}
+
+#username {
+    margin-right: 2vw;
+}
+
+
+#language_icon { 
+    cursor: pointer;
+
+    margin-left: 4vw;
+}
+
+#main_panel {   
+    margin-left: 8px;
+    margin-right: 8px;
+
+    margin-top: 8vh;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+}
+
+
+
+
+
+
+
+
+#exercise_container {
+    margin-bottom: 4vh;
+
+    padding: 8px;
+
+    width: 76.5vw;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+}
+
+#exercise_title {
+    white-space: nowrap;
+
+    margin-left: 30vw;
+    margin-top: 1vh;
+
+    font-size: x-large;
+}
+
+#exercise_line {
+    width: 75%;
+
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+
+    margin-left: 12.5%;
+
+    border-style: solid;
+    border-width: 1px;
+    border-image-source: linear-gradient(to right, rgb(255, 255, 255), rgb(32, 32, 32), rgb(255, 255, 255));
+    border-image-slice: 8%;
+    border-radius: 25px;
+}
+
+#exercise_statement {
+    font-size: larger;
+
+    margin-bottom: 4vh;
+    margin-right: auto;
+    margin-left: 1vw;
+}
+
+#exercise_options {
+    margin-left: 1vw;
+    margin-bottom: 2vh;  
+}
+
+.exercise_documents {
+    margin-top: 1vh;
+    margin-bottom: 4vh;
+}
+
+.exercise_documents.audio {
+    margin-bottom: 3vh;
+    margin-left: 3vw;
+}
+
+.exercise_documents.image {
+    max-width: 75vw;
+    max-height: 75vw;
+}
+
+#exercise_question {
+    margin-left: 1vw;
+}
+
+#exercise_questions {
+    margin-left: 3vw;
+}
+
+#exercise_submit {
+    margin-top: 1vh;
+
+    cursor: pointer;
+
+    background-color: rgb(240, 242, 245);
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(225, 227, 230);
+    border-radius: 25px;
+
+    padding: 1vh 2vw 1vh 2vw;
+
+    font-size: large;
+}
+
+
+
+
+
+
+
+
+
+
+#correction_container {
+    padding: 16px;
+
+    width: 75.5vw;
+
+    margin-bottom: 3vh;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+}
+
+.user_answers_label, .questions_answers_label {
+    margin-left: 1vw;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+
+.user_answers, .questions_answers {
+    margin-left: 4vw;
+}
+
+.correct_answers {
+    margin-top: 2vh;
+    margin-left: 1vw;
+}
+
+.answers_count {
+    margin-top: 2vh; 
+    margin-bottom: 1vh;  
+    margin-left: 1vw; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#side_panel {
+    margin-left: auto;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+#side_panel > * {
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+
+    margin-bottom: 3vh;
+
+    min-width: 285px;
+    min-height: 75px;
+   
+    text-align: center;
+    line-height: 75px;
+
+    font-size: 24px;
+}
+
+#language_panel {
+    display: none;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    height: auto;
+  
+    animation-name: appear;
+    animation-duration: 1s; 
+}
+
+@keyframes appear {
+    from {opacity: .0}
+    to {opacity: 1}     
+}
+

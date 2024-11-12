@@ -1,0 +1,210 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/search.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <script defer src="{% static 'index/search.js' %}"></script>
+        <title>Amets - Search</title>
+
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+
+            <div id="search_form">
+                <button id="submit_button" type="button" onclick="submitForm()">
+                    <img id="loop_icon" src="{% static 'index/images/loop_icon.png' %}" alt="loop icon" width="32" height="32">
+                </button>
+                
+                <input id="search" type="text" size="32" name="q" value="{{search_value}}">
+            </div>
+    
+            <div id="user_block">
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+
+                {% else %}
+
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+
+                {% endif %}
+            </div>
+            
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+            
+            <div id="feed_panel">
+
+                {% for post in post_list %}
+                    <div class="post">
+
+                        <div class="post_header">
+                            <div class="post_face">  
+                                <span class="post_type {{post.getTypeLabel}}">#{{post.post_type}}</span>
+                                <p class="post_title">{{post.post_title}}</p>
+                            </div>
+
+                            <div class="post_info">
+                                <a class="post_poster" href="{% url 'index:profile' post.post_poster.user.get_username %}">
+                                    @{{post.post_poster.user.get_username}}:
+                                </a>
+                                <span class="post_date">{{post.post_date}}</span>
+                                <span class="post_language">{{post.post_language}}</span>
+                                <span class="post_state {{post.getStateLabel}}">{{post.getState}}</span>                    
+                            </div>
+                        </div>
+
+                        <hr class="post_header_line">
+
+                        <a href="{% url 'index:post' post.id %}">
+                            <article class="post_content">{{post.getDisplayedContent}}</article>
+                        </a>
+                        
+                    </div>
+                {% endfor %}
+
+            </div>
+                
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+
+                <div id="filter_form">
+
+                    <span id="filter_legend">Filtering</span>
+
+                    <hr id="filter_line">
+
+                    <label class="label">Date:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" for="first_date">From</label>
+                        <input class="field" id="first_date" type="date"  name="f_date" value="2022-01-01">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" for="second_date">To</label>
+                        <input class="field" id="second_date" type="date"  name="s_date">
+                    </div>
+
+                    <label class="label">Order by:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" for="score">Score</label>
+                        <input class="field" id="score" type="radio" name="by" value="score" checked>
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" for="date">Date</label>
+                        <input class="field" id="date" type="radio" name="by" value="date">
+                    </div>
+
+                    <label class="label">Order:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" for="increasing">Increasing</label>
+                        <input class="field" id="increasing" type="radio" name="order" value="inc">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" for="decreasing">Decreasing</label>
+                        <input class="field" id="decreasing" type="radio" name="order" value="dec" checked>
+                    </div>
+
+                    <label class="label">Type:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" for="both_type">Both</label>
+                        <input class="field" id="both_type" type="radio" name="type" value="both" onclick="updateFields()" checked>
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" for="thread">Thread</label>
+                        <input class="field" id="thread" type="radio" name="type" value="thread" onclick="updateFields()">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" for="news">News</label>
+                        <input class="field" id="news" type="radio" name="type" value="news" onclick="updateFields()">
+                    </div>
+
+                    <label class="label" id="thread_state_label">Thread state:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" id="both_state_label" for="both_state">Both</label>
+                        <input class="field" id="both_state" type="radio" name="t_state" value="both" checked>
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" id="open_label" for="open">Open</label>
+                        <input class="field" id="open" type="radio" name="t_state" value="open">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" id="answered_label" for="answered">Answered</label>
+                        <input class="field" id="answered" type="radio" name="t_state" value="answered">
+                    </div>
+
+                    <label class="label" id="news_state_label">News state:</label>
+                    <div class="filter_field">
+                        <label class="sub_label" id="all_state_label" for="all_state">All</label>
+                        <input class="field" id="all_state" type="radio" name="n_state" value="all" checked>
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" id="yet_to_happen_label" for="yet_to_happen">Yet to happen</label>
+                        <input class="field" id="yet_to_happen" type="radio" name="n_state" value="yet_to_happen">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" id="happening_today_label" for="happening_today">Happening today</label>
+                        <input class="field" id="happening_today" type="radio" name="n_state" value="happening_today">
+                    </div>
+                    <div class="filter_field">
+                        <label class="sub_label" id="already_happened_label" for="already_happened">Alrdy. happened</label>
+                        <input class="field" id="already_happened" type="radio" name="n_state" value="already_happened">
+                    </div>
+
+                    <button id="submit_button" type="button" onclick="submitForm()">
+                        <img id="filter_icon" src="{% static 'index/images/filter_icon.png' %}" alt="Filter icon" width="36" height="36">  
+                    </button>
+        
+                </div>
+
+
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+                
+        </div>
+
+        <form id="real_form" action="{% url 'index:search' %}" method="get" style="display: none;"> 
+            <input id="real_search" type="text" name="q">
+            <input  id="real_first_date" type="date"  name="f_date">          
+            <input  id="real_second_date" type="date"  name="s_date">   
+            <input  id="real_by" type="radio" name="by">      
+            <input  id="real_order" type="radio" name="order">           
+            <input  id="real_type" type="radio" name="type">              
+            <input  id="real_thread_state" type="radio" name="t_state">       
+            <input  id="real_news_state" type="radio" name="n_state"> 
+        </form>
+            
+    </body>
+
+</html>

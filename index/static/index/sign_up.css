@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: rgb(5, 5, 5);
+}
+
+:link {
+    text-decoration: none;
+}
+
+body {
+    background-color: rgb(240, 242, 245);
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#form {
+    background-color: rgb(255, 255, 255);
+    
+    border-color: rgb(225, 227, 230);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 25px;
+    
+    margin: 32px;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;    
+}
+
+#home_link {
+    margin-right: auto;
+    margin-left: 8px;
+    margin-top: 8px;
+}
+
+#legend {
+    font-size: 32px;
+}
+
+#line {
+    width: 50%;
+    
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-image-source: linear-gradient(to right, rgb(255, 255, 255), rgb(32, 32, 32), rgb(255, 255, 255));
+    border-image-slice: 8%;
+    border-radius: 25px;
+}
+
+#form_content {
+    margin-right: auto;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;  
+}
+
+.field {
+    margin-right: auto;
+
+    margin-left: 28vw;
+    margin-bottom: 4vh;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;      
+}
+
+.label {
+    margin-right: 5vw;
+}
+
+#email_label {
+    margin-right: 7vw;
+}
+
+.input {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(32, 32, 32);
+    border-radius: 25px;
+
+    height: 3vh;
+
+    padding-left: 1vw;   
+}
+
+.error_panel {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;    
+}
+
+.question_mark_icon {
+    margin-left: 2vw;
+    margin-right: 1vw;
+}
+
+.error_message {
+    visibility: hidden;
+
+    padding: 8px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(101, 103, 107);
+    border-radius: 25px;
+    
+    color: red;
+
+    opacity: 0;
+
+    transition: opacity 1.5s;
+}
+
+.error_panel:hover .error_message {
+    visibility: visible;
+
+    opacity: 1;
+}
+
+.error_field {
+    border-color: red;
+}
+
+#form_action {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    min-width: 24vw;
+    justify-content: space-around;
+}
+
+.action {
+    cursor: pointer;
+
+    margin-top: 4vh;
+    margin-bottom: 7vh;
+
+    height: 3vh;
+    width: 7vw;
+
+    line-height: 1vh;
+
+    padding: 8px;
+
+    background-color: transparent;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(32, 32, 32);
+    border-radius: 25px;
+}

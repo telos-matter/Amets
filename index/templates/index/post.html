@@ -1,0 +1,173 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/post.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <title>Amets - Post</title>
+
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+    
+            <div id="user_block">
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+
+                {% else %}
+
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+
+                {% endif %}
+            </div>
+            
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+            
+            <div id="feed_panel">
+
+                <div class="post">
+
+                    <div class="post_header">
+                        <div class="post_face">  
+                            <span class="post_type {{post.getTypeLabel}}">#{{post.post_type}}</span>
+                            <p class="post_title">{{post.post_title}}</p>
+                            {% if post_owner %}
+                                <a href="{% url 'index:delete' post.id %}">
+                                    <img id="trash_icon" src="{% static 'index/images/trash_icon.png' %}" alt="Trash icon" width="32" height="32">
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <div class="post_info">
+                            <a class="post_poster" href="{% url 'index:profile' post.post_poster.user.get_username %}">
+                                @{{post.post_poster.user.get_username}}:
+                            </a>
+                            <span class="post_date">{{post.post_date}}</span>
+                            <span class="post_language">{{post.post_language}}</span>
+                            <span class="post_state {{post.getStateLabel}}">{{post.getState}}</span>                    
+                        </div>
+                    </div>
+
+                    <hr class="post_header_line">
+
+                    <article class="post_content">{{post.post_content.content_text}}</article>
+
+                    <hr class="post_header_line">
+
+                    <div id="post_footer">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'index:like' post.id %}">
+                                {% if user_reaction == 1 %}
+                                    <img id="filled_thumb_up_icon" src="{% static 'index/images/filled_thumb_up_icon.png' %}" alt="Filled thumb up icon" width="28" height="28">               
+                                {% else %}
+                                    <img id="thumb_up_icon" src="{% static 'index/images/thumb_up_icon.png' %}" alt="Thumb up icon" width="28" height="28">               
+                                {% endif %}
+                            </a>
+                            <span id="thumb_up_count">{{positive_count}}</span>
+                            <a href="{% url 'index:dislike' post.id %}">
+                                {% if user_reaction == -1 %}
+                                    <img id="filled_thumb_down_icon" src="{% static 'index/images/filled_thumb_down_icon.png' %}" alt="Filled down up icon" width="28" height="28">               
+                                {% else %}
+                                    <img id="thumb_down_icon" src="{% static 'index/images/thumb_down_icon.png' %}" alt="Thumb down icon" width="28" height="28">               
+                                {% endif %}
+                            </a>
+                            <span id="thumb_down_count">{{negative_count}}</span>
+                        {% else %}
+                            <a href="{% url 'index:sign_in' %}">
+                                <img id="thumb_up_icon" src="{% static 'index/images/thumb_up_icon.png' %}" alt="Thumb up icon" width="28" height="28">               
+                            </a>
+                            <span id="thumb_up_count">{{positive_count}}</span>
+                            <a href="{% url 'index:sign_in' %}">
+                                <img id="thumb_down_icon" src="{% static 'index/images/thumb_down_icon.png' %}" alt="Thumb down icon" width="28" height="28">               
+                            </a>
+                            <span id="thumb_down_count">{{negative_count}}</span>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+
+                {% if user.is_authenticated %}
+                    <form id="post_form" action="{% url 'index:post' post.id %}" method="post">
+                        {% csrf_token %}
+
+                        <textarea id="content_field" name="content" form="post_form">Comment or reply to this post..</textarea>
+             
+                        <input id="submit_button" type="submit" value="Comment / Reply">
+                    </form>
+                {% endif %}
+
+                {% for reply in reply_list %}
+                    <div class="post reply">
+                        <div class="post_header">
+                            <div class="post_info">
+                                <a class="post_poster" href="{% url 'index:profile' reply.reply_poster.user.get_username %}">
+                                    @{{reply.reply_poster.user.get_username}}:
+                                </a>
+                                <span class="post_date">{{reply.reply_date}}</span>
+
+                                {% if post.isThread %}
+                                    {% if answered %}
+
+                                        {% if reply.reply_selected %}
+                                            <span id="selected_reply">Selected reply</span>
+                                        {% endif %}
+
+                                    {% elif post_owner %}
+
+                                        <a class="chose_reply" href="{% url 'index:select' reply.id post.id %}">Select reply</a>
+
+                                    {% endif %}
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        <hr class="post_header_line">
+
+                        <article class="post_content">{{reply.reply_content.content_text}}</article>
+                    </div>
+                {% endfor %}
+
+            </div>
+                
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+                
+        </div>
+       
+    </body>
+</html>

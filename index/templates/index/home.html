@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/home.css' %}">
+        <script defer src="{% static 'index/home.js' %}"></script>
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <title>Amets - Home</title>
+        
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+            <div id="user_block">
+
+                {% if user.is_authenticated %}
+                
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+                {% else %}
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+                {% endif %}
+
+            </div>
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+
+            <div id="slides_container">
+
+                <div id="slides">
+                    <a id="prev" onclick="prevSlide()">&#10094;</a>
+    
+                    <div class="slide">
+                        <h1 class="slide_title">Threads</h1>
+                        <hr class="slide_line">
+                        <p class="slide_statement">Ask questions, acquire information and select the answer you deem fit. Help out others by answering their questions and get points if they deem your answer fit.</p>
+                    </div>
+    
+                    <div class="slide">
+                        <h1 class="slide_title">News</h1>
+                        <hr class="slide_line">
+                        <p class="slide_statement">Check out all the verified and recent events and news that are German related, or post, you yourself, about them and acquire points if they get approved.</p>
+                    </div>
+
+                    <div class="slide">
+                        <h1 class="slide_title">Exercices</h1>
+                        <hr class="slide_line">
+                        <p class="slide_statement">Sharpen your German skills and knowledge with the different levels exercises that tackle most lessons. We provide a bunch of them for all our users, <a href="{% url 'index:sign_up' %}" style="font-weight: bold;">sign up</a> now for free to benefit from them as well!</p>
+                    </div>
+
+                    <div class="slide">
+                        <h1 class="slide_title">Exams</h1>
+                        <hr class="slide_line">
+                        <p class="slide_statement">Practice on different levels model exams that simulate the real one's limitations and acquire points according to your results. Only available for our users, <a href="{% url 'index:sign_up' %}" style="font-weight: bold;">sign up</a> now for free to practice as well!</p>
+                    </div>
+
+                    <div class="slide">
+                        <h1 class="slide_title">Resources</h1>
+                        <hr class="slide_line">
+                        <p class="slide_statement">Explore our vast library of German articles, books and novels of all different kinds and sorts. The library is only accessible for our users, <a href="{% url 'index:sign_up' %}" style="font-weight: bold;">sign up</a> now for free to explore as well!</p>
+                    </div>
+                    
+                    <a id="next" onclick="nextSlide()">&#10095;</a>
+                </div>
+
+                <div id="dots">
+                    <span class="dot" onmouseover="showSlide(0)"></span>
+                    <span class="dot" onmouseover="showSlide(1)"></span>
+                    <span class="dot" onmouseover="showSlide(2)"></span>
+                    <span class="dot" onmouseover="showSlide(3)"></span>
+                    <span class="dot" onmouseover="showSlide(4)"></span>
+                </div>
+             
+            </div>
+    
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a id="home_link" href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div id="bottom_panel">
+            <a href="{% url 'index:about' %}">About</a>
+            <a href="{% url 'index:contact_us' %}">Contact us</a>
+            <a href="{% url 'index:use_conditions' %}">Use conditions</a>
+            <a href="{% url 'index:report_bug' %}">Report a bug</a>
+        </div>
+
+    </body>
+</html>

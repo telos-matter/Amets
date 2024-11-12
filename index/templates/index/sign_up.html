@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/sign_up.css' %}">
+        <title>Amets - Sign up</title>
+    </head>
+    <body>
+
+        <form id="form" action="{% url 'index:sign_up' %}" method="post">
+            {% csrf_token %}
+
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="legend">Sign up</p>
+
+            <hr id="line">
+
+            <div id="form_content">
+
+                <div class="field">
+                    <label class="label" for="username">Username </label>
+                    {% if username_error %}
+
+                        <input class="input error_field" type="text" size="32" id="username" name="username" value="{{username_value}}">
+                        <div class="error_panel" id="username_error">
+                            <img class="question_mark_icon" src="{% static 'index/images/question_mark_icon.png' %}" alt="Question mark icon" width="32" height="32">
+                            <span class="error_message">{{username_error}}</span>
+                        </div>
+
+                    {% else %}
+
+                        <input class="input" type="text" size="32" id="username" name="username" value="{{username_value}}">
+
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label class="label" id="email_label" for="email">Email </label>
+                    {% if email_error %}
+
+                        <input class="input error_field" type="email" size="32" id="email" name="email" value="{{email_value}}">
+                        <div class="error_panel" id="email_error">
+                            <img class="question_mark_icon" src="{% static 'index/images/question_mark_icon.png' %}" alt="Question mark icon" width="32" height="32">
+                            <span class="error_message">{{email_error}}</span>
+                        </div>
+
+                    {% else %}
+
+                        <input class="input" type="email" size="32" id="email" name="email" value="{{email_value}}">
+
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label class="label" for="password">Password </label>
+                    {% if password_error %}
+
+                        <input class="input error_field" type="password" size="32" id="password" name="password" value="{{password_value}}">
+                        <div class="error_panel" id="password_error">
+                            <img class="question_mark_icon" src="{% static 'index/images/question_mark_icon.png' %}" alt="Question mark icon" width="32" height="32">
+                            <span class="error_message">{{password_error}}</span>
+                        </div>
+
+                    {% else %}
+
+                        <input class="input" type="password" size="32" id="password" name="password" value="{{password_value}}">
+
+                    {% endif %}
+                </div>
+           
+            </div>
+
+            <div id="form_action">
+                <input class="action" type="reset" value="Reset">
+                <input class="action" type="submit" value="Sign up">
+            </div>
+        </form>
+
+    </body>
+</html>

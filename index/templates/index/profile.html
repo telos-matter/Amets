@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/profile.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <script defer src="{% static 'index/profile.js' %}"></script>
+        <title>Amets - Profile</title>
+        
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+            <div id="user_block">
+
+                {% if user.is_authenticated %}
+                
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+                {% else %}
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+                {% endif %}
+
+            </div>
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+
+            <div id="profile_panel">
+                <div id="profile_info">
+
+                    {% if profile_owner %}
+                        <img id="profile_avatar_owner" src="{% static profile.profile_avatar %}" alt="Avatar icon" width="377.2" height="400" onclick="change()">
+                    {% else %}
+                        <img id="profile_avatar" src="{% static profile.profile_avatar %}" alt="Avatar icon" width="377.2" height="400">
+                    {% endif %}
+
+
+                    <div id="profile_aside">
+                        <span id="profile_username">@{{profile.user.username}}</span>
+                        <span id="profile_points">Points <span id="profile_points_span">{{profile.profile_points}}</span></span>
+                        {% if profile_owner %}
+                            <a id="sign_out" href="{% url 'index:sign_out' %}">
+                                <button id="sign_out_button">Sign out</button>
+                            </a>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div id="profile_change">
+                    {% for avatar_link in avatar_list%}
+                        <a href="{% url 'index:select_avatar' forloop.counter %}">
+                            <img id="{{avatar_link}}" class="select_avatar" src="{% static avatar_link %}" alt="Avatar icon" width="160" height="170">
+                        </a>
+                    {% endfor %}
+                </div>
+
+                {% if profile_owner %}
+                    <form id="post_form" action="{% url 'index:profile' user.username %}" method="post">
+                        {% csrf_token %}
+
+                        <span id="form_label">Change your password</span>
+
+                        <hr id="pass_line">
+
+                        <div id="old_pass_div">
+                            <label id="old_pass_label" for="old_pass_field">Current password</label>
+                            <input id="old_pass_field" type="password" size="32" name="old_password">
+                        </div>
+
+                        <div id="new_pass_div">
+                            <label id="new_pass_label" for="new_pass_field">New password</label>
+                            <input id="new_pass_field" type="password" size="32" name="new_password">
+                        </div>
+
+
+                        <div id="post_form_footer">
+                            <input id="submit_button" type="submit" value="Change it">
+                            {% if error_message%}
+                                <p id="error_message" class="form_message">{{error_message}}</p>
+                            {% endif %}
+                            {% if post_message%}
+                                <p id="post_message" class="form_message">{{post_message}}</p>
+                            {% endif %}
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+    
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/sign_in.css' %}">
+        <title>Amets - Sign in</title>
+    </head>
+    <body>
+
+        <form id="form" action="{% url 'index:sign_in' %}" method="post">
+            {% csrf_token %}
+
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="legend">Sign in</p>
+
+            <hr id="first_line">
+
+            <div id="username_field">
+                <label class="labels" for="username">Username </label>
+                {% if error_message %}
+                    <input class="inputs error" type="text" size="32" id="username" name="username">
+                {% else %}
+                    <input class="inputs" type="text" size="32" id="username" name="username">
+                {% endif %}
+            </div>
+
+            <div id="password_field">
+                <label class="labels" for="password">Password </label>
+                {% if error_message %}
+                    <input class="inputs error" type="password" size="32" id="password" name="password">
+                {% else %}
+                    <input class="inputs" type="password" size="32" id="password" name="password">
+                {% endif %}            
+            </div>
+
+            <input id="submit" type="submit" value="Sign in">
+
+            <hr id="second_line">
+            <div id="bottom_panel">
+                <a id="sign_up" href="{% url 'index:sign_up' %}">Sign up</a>
+                <a id="forgot" href="{% url 'index:forgot' %}">Forgot password?</a>
+            </div>
+        </form>
+
+    </body>
+</html>

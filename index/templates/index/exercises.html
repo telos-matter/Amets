@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/exercises.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <title>Amets - Exercises</title>
+
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+            <div id="user_block">
+
+                {% if user.is_authenticated %}
+                
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+                {% else %}
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+                {% endif %}
+
+            </div>
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+
+            <div id="exercises_panel">
+
+                <label class="level_label">A1</label>
+                {% if A1_list %}
+                    {% for exercise in A1_list %}
+                        <a class="exercise_link" href="{% url 'index:exercise' exercise.id %}">{{exercise.exercise_title}}</a>
+                    {% endfor %}
+                {% else %}
+                    <span class="unavailable">We currently have no exercises for this level.</span>
+                {% endif %}
+
+                <label class="level_label">A2</label>
+                {% if A2_list %}
+                    {% for exercise in A2_list %}
+                        <a class="exercise_link" href="{% url 'index:exercise' exercise.id %}">{{exercise.exercise_title}}</a>
+                    {% endfor %}
+                {% else %}
+                    <span class="unavailable">We currently have no exercises for this level.</span>
+                {% endif %}
+
+                <label class="level_label">B1</label>
+                {% if B1_list %}
+                    {% for exercise in B1_list %}
+                        <a class="exercise_link" href="{% url 'index:exercise' exercise.id %}">{{exercise.exercise_title}}</a>
+                    {% endfor %}
+                {% else %}
+                    <span class="unavailable">We currently have no exercises for this level.</span>
+                {% endif %}
+
+                <label class="level_label">B2</label>
+                {% if B2_list %}
+                    {% for exercise in B2_list %}
+                        <a class="exercise_link" href="{% url 'index:exercise' exercise.id %}">{{exercise.exercise_title}}</a>
+                    {% endfor %}
+                {% else %}
+                    <span class="unavailable">We currently have no exercises for this level.</span>
+                {% endif %}
+
+                <label class="level_label">C1</label>
+                {% if C1_list %}
+                    {% for exercise in C1_list %}
+                        <a class="exercise_link" href="{% url 'index:exercise' exercise.id %}">{{exercise.exercise_title}}</a>
+                    {% endfor %}
+                {% else %}
+                    <span id="last_label" class="unavailable">We currently have no exercises for this level.</span>
+                {% endif %}
+
+            </div>
+ 
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a href="{% url 'index:feed' %}">Feed</a>
+
+                {% if user.is_authenticated %}
+                    <a id="exercises_side_link" href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </body>
+</html>

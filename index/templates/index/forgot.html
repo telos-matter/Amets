@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/forgot.css' %}">
+        <title>Amets - Forgot</title>
+
+    </head>
+    <body>
+
+        <div id="panel">
+            <a id="home_link" href="{% url 'index:home' %}"> 
+                <img id="home_icon" src="{% static 'index/images/home_icon.png' %}" alt="Home icon" width="56" height="56">
+            </a>
+
+            <p id="title">Forgot password</p>
+
+            <hr id="line">
+
+            <p id="header">Unfortunately, this feature is not yet implemented. Next time remember your password, or you can just <a id="sign_up_link" href="{% url 'index:sign_up' %}">sign up</a> again.</p>
+
+        </div>
+        
+
+    </body>
+</html>

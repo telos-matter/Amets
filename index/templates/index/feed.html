@@ -1,0 +1,149 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'index/feed.css' %}">
+        <script defer src="{% static 'index/language.js' %}"></script>
+        <title>Amets - Feed</title>
+
+    </head>
+    <body>
+
+        <div id="nav_bar">
+            <a id="logo" href="{% url 'index:home' %}">Amets</a>
+
+            <form id="search_form" action="{% url 'index:search' %}" method="get">
+                <button id="submit_button" type="submit">
+                    <img id="loop_icon" src="{% static 'index/images/loop_icon.png' %}" alt="Home icon" width="32" height="32">
+                </button>
+                
+                <input id="search_field" type="text" size="32" name="q">
+            </form>
+    
+            <div id="user_block">
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'index:profile' user.username %}">
+                        <img id="avatar_icon" src="{% static user.profile.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                    </a>
+
+                    <a id="username" href="{% url 'index:profile' user.username %}">@{{user.username}}</a>
+
+                {% else %}
+
+                    <a id="sign_in" href="{% url 'index:sign_in' %}">Sign in</a>
+
+                {% endif %}
+            </div>
+            
+            <img id="language_icon" src="{% static 'index/images/language_icon.png' %}" alt="Language icon" width="56" height="56" onclick="select()">
+        </div>
+
+        <div id="main_panel">
+            
+            <div id="feed_panel">
+
+                {% if user.is_authenticated %}
+                    <form id="post_form" action="{% url 'index:feed' %}" method="post">
+                        {% csrf_token %}
+
+                        <label id="form_type_label">
+                            {% if type_value == False %}
+                                <input id="form_checkbox" type="checkbox" name="type">
+                            {% else %}
+                                <input id="form_checkbox" type="checkbox" name="type" checked>
+                            {% endif %}
+                            <span id="form_type_span">#</span>
+                        </label>
+
+                        {% if title_value %}
+                            <input id="title_field" type="text" size="32" name="title" value="{{title_value}}">
+                        {% else %}
+                            <input id="title_field" type="text" size="32" name="title" value="Your post title..">
+                        {% endif %}
+
+                        {% if content_value %}
+                            <textarea id="content_field" name="content" form="post_form">{{content_value}}</textarea>
+                        {% else %}
+                            <textarea id="content_field" name="content" form="post_form">Your post content. It can include #tags that help find it, by default, your post type tag is included..</textarea>
+                        {% endif %}
+
+                        <div id="post_form_footer">
+                            <input id="submit_button" type="submit" value="Post it">
+                            {% if error_message%}
+                                <p id="error_message" class="form_message">{{error_message}}</p>
+                            {% endif %}
+                            {% if submit_message%}
+                                <p id="submit_message" class="form_message">{{submit_message}}</p>
+                            {% endif %}
+                            {% if post_message%}
+                                <p id="post_message" class="form_message">{{post_message}}</p>
+                            {% endif %}
+                        </div>
+                    </form>
+                {% endif %}
+
+                {% for post in post_list %}
+                    <div class="post">
+
+                        <div class="post_header">
+                            <div class="post_face">  
+                                <span class="post_type {{post.getTypeLabel}}">#{{post.post_type}}</span>
+                                <p class="post_title">{{post.post_title}}</p>
+                            </div>
+
+                            <div class="post_info">
+                                <a href="{% url 'index:profile' post.post_poster.user.get_username %}">
+                                    <img class="post_avatar_icon" src="{% static post.post_poster.profile_avatar %}" alt="Avatar icon" width="45.2" height="48">
+                                </a>
+                                <a class="post_poster" href="{% url 'index:profile' post.post_poster.user.get_username %}">
+                                    @{{post.post_poster.user.get_username}}:
+                                </a>
+                                <span class="post_date">{{post.post_date}}</span>
+                                <span class="post_language">{{post.post_language}}</span>
+                                <span class="post_state {{post.getStateLabel}}">{{post.getState}}</span>                    
+                            </div>
+                        </div>
+
+                        <hr class="post_header_line">
+
+                        <a href="{% url 'index:post' post.id %}">
+                            <article class="post_content">{{post.getDisplayedContent}}</article>
+                        </a>
+                        
+                    </div>
+                {% endfor %}
+
+            </div>
+                
+            <div id="side_panel">
+                <div id="language_panel">
+                    <ul>
+                        <li style="font-size: 12px; font-weight: bolder;">NOT YET WORKING</li>
+                        <li>All <span style="font-size: 18px;">(English)</span></li>
+                        <li>English</li>
+                        <li>Deutsch</li>
+                        <li>Français</li>
+                    </ul>
+                </div>
+
+                <a href="{% url 'index:home' %}">Home</a>
+
+                <a id="feed_link" href="{% url 'index:feed' %}">Feed</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index:exercises' %}">Exercises</a>
+
+                    <a href="{% url 'index:exams' %}">Exams</a>
+
+                    <a href="{% url 'index:resources' %}">Resources</a>
+                {% endif %}
+            </div>
+                
+        </div>
+            
+    </body>
+</html>
